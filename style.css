@@ -1,3 +1,14 @@
+/* font face */
+    @font-face {
+        font-family: 'radiolandregular';
+        src: url('font/radioland-webfont.woff2') format('woff2'),
+            url('font/radioland-webfont.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+
+    }
+
+
 .form-group input {
     text-align: right;
 }

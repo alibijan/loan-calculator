@@ -19,6 +19,8 @@ let termValue;
 
 let powerOf;
 
+let inputElement;
+
 
 // Eventhandler function
 loadEventListeners();
@@ -28,10 +30,14 @@ function loadEventListeners() {
 
     // calculate button event listener
     button.addEventListener('click', buttonEvent);
+
+    // easter egg event listener
+    form.addEventListener('keyup', easterEgg);
 }
 
+
 // Form values function
-function formValues(e) {
+function formValues() {
     // Get the values for form field
     amountValue = amount.value;
     interestValue = (interest.value / 100 / 12) + 1; // from percent to decimal
@@ -41,8 +47,6 @@ function formValues(e) {
     // console.log(`Loan interest: ${interestValue}`);
     // console.log(`Loan term: ${termValue}`);
 }
-
-
 
 // calculate button event
 function buttonEvent(e) {
@@ -77,4 +81,15 @@ function buttonEvent(e) {
 
     // prevent default
     e.preventDefault();
+}
+
+// easter egg
+function easterEgg(e) {
+    // console.log(e.target.value);
+    if(e.target.value == 80085 ) {
+        inputElement = e.target;
+        inputElement.style.fontFamily = 'radiolandregular';
+    } else {
+        inputElement.style.fontFamily = 'inherit';
+    }
 }
