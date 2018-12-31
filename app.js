@@ -32,6 +32,9 @@ function loadEventListeners() {
     // calculate button event listener
     button.addEventListener('click', buttonEvent);
 
+    // close error
+    card.addEventListener('click', closeError); // running through card to avoid null error
+    
     // easter egg event listener
     form.addEventListener('keyup', easterEgg);
 }
@@ -104,11 +107,36 @@ function ErrorEvent(removeErrorEvent) {
     errorElement.className = 'alert alert-danger';
     // create error text
     errorElement.appendChild(document.createTextNode('Error!'));
-    // insert before heading
+
+    // create close link
+    const errorElementClose = document.createElement('button');
+    // give classes to link
+    errorElementClose.className = 'close';
+    // add x to link
+    errorElementClose.innerHTML = 'x';
+
+    // insert link to error element
+    errorElement.appendChild(errorElementClose);
+    // insert error element before heading
     card.insertBefore(errorElement, heading);
 
     if( removeErrorEvent === 'remove' ) {
         errorElement.remove();
+    }
+}
+
+// close error event
+function closeError(e) {
+    const errorButton = document.querySelector('.close');
+
+    // if clicked on x
+    if( e.target === errorButton ) {
+        // select alert
+        const errorElement = document.querySelectorAll('.alert');
+        // loop through parent of error, and remove
+        errorElement.forEach(function(e) {
+            e.parentNode.removeChild(e);
+        });
     }
 }
 

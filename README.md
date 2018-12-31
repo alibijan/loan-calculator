@@ -11,5 +11,6 @@ Javascript exercise: a simple loan calculator.
 2. LocalStorage?
 
 ## Done
+- ~~Remove error when clicked on X~~
 - ~~Include error when text is empty~~
 - ~~Include easter egg~~
