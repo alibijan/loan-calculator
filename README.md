@@ -9,3 +9,7 @@ Javascript exercise: a simple loan calculator.
 ## Todo
 1. Include loading image
 2. LocalStorage?
+
+## Done
+- ~~Include error when text is empty~~
+- ~~Include easter egg~~

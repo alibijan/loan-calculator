@@ -1,4 +1,5 @@
 // const vars
+const card = document.querySelector('.card');
 const heading = document.querySelector('.heading');
 const form = document.getElementById('loan-form');
     const amount = document.getElementById('amount');
@@ -54,6 +55,18 @@ function buttonEvent(e) {
     paymentMonthly.setAttribute('value', '');
     paymentTotal.setAttribute('value', '');
     paymentInterest.setAttribute('value', '');
+    // if error exists, remove it
+    const errorElement = document.querySelectorAll('.alert');
+    errorElement.forEach(function(e) {
+        e.parentNode.removeChild(e);
+    });
+
+    // either display results or run errorEvent()
+    if( amountValue !== '' && interestValue !== 1 && termValue !== 0 ) {
+        results.style.display = 'block';
+    } else {
+        ErrorEvent();
+    }
 
     // set monthly payment input
     paymentMonthly.setAttribute('value', `$${monthlyPayment()}`);
@@ -81,6 +94,22 @@ function buttonEvent(e) {
 
     // prevent default
     e.preventDefault();
+}
+
+// error event
+function ErrorEvent(removeErrorEvent) {
+    // create error element
+    const errorElement = document.createElement('div');
+    // give classes to error element
+    errorElement.className = 'alert alert-danger';
+    // create error text
+    errorElement.appendChild(document.createTextNode('Error!'));
+    // insert before heading
+    card.insertBefore(errorElement, heading);
+
+    if( removeErrorEvent === 'remove' ) {
+        errorElement.remove();
+    }
 }
 
 // easter egg
