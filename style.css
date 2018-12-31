@@ -1,0 +1,6 @@
+.form-group input {
+    text-align: right;
+}
+.form-group input::before {
+    content: '$';
+}
