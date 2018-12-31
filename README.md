@@ -11,6 +11,7 @@ Javascript exercise: a simple loan calculator.
 2. LocalStorage?
 
 ## Done
+- ~~bug: if you click on calculate, and clear button already exists, it creates a new one. Does it everytime you click~~
 - ~~Include clear button when something is calculated, remove if not~~
 - ~~Remove error when clicked on X~~
 - ~~Include error when text is empty~~
