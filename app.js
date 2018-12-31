@@ -111,43 +111,49 @@ function clearButton(e) {
     const success = amountValue !== '' && interestValue !== 1 && termValue !== 0;
 
     if( success ) {
-        // creating clear button
-        const clearElement = document.createElement('input');
-        clearElement.setAttribute('type', 'submit');
-        clearElement.setAttribute('value', 'Clear Results');
-        clearElement.className = 'btn btn-clear';
-        // inserting clear button
-        button.parentElement.insertBefore(clearElement, button);
+        const buttonClearAll = document.querySelectorAll('.btn-clear');
+        const buttonClearArray = Array.from(buttonClearAll);
+        if( buttonClearArray.length < 1 ) {
+            // creating clear button
+            const clearElement = document.createElement('input');
+            clearElement.setAttribute('type', 'submit');
+            clearElement.setAttribute('value', 'Clear Results');
+            clearElement.className = 'btn btn-clear';
+            // inserting clear button
+            button.parentElement.insertBefore(clearElement, button);
 
-        // changing width for buttons
-        const clearButton = document.querySelector('input.btn-clear');
-        // styling buttons
-        clearButton.style.float = 'left';
-        button.style.width = `calc(100% - (${clearButton.offsetWidth}px + 5px))`;
-        button.style.float = 'right';
+            // changing width for buttons
+            const clearButton = document.querySelector('input.btn-clear');
+            // styling buttons
+            clearButton.style.float = 'left';
+            button.style.width = `calc(100% - (${clearButton.offsetWidth}px + 5px))`;
+            button.style.float = 'right';
 
-        // clear button event listener
-        clearButton.addEventListener('click', clearButtonAction);
-        function clearButtonAction(e) {
-            // loan values
-            amount.value = '';
-            interest.value = '';
-            term.value = '';
-            // result values
-            paymentMonthly.setAttribute('value', '');
-            paymentTotal.setAttribute('value', '');
-            paymentInterest.setAttribute('value', '');
+            // clear button event listener
+            clearButton.addEventListener('click', clearButtonAction);
+            function clearButtonAction(e) {
+                // loan values
+                amount.value = '';
+                interest.value = '';
+                term.value = '';
+                // result values
+                paymentMonthly.setAttribute('value', '');
+                paymentTotal.setAttribute('value', '');
+                paymentInterest.setAttribute('value', '');
 
-            // hide results
-            results.style.display = 'none';
+                // hide results
+                results.style.display = 'none';
 
-            // hide clear button
-            clearButton.remove();
-            
-            // reset calculate button styling
-            button.style.width = '100%';
+                // hide clear button
+                clearButton.remove();
+                
+                // reset calculate button styling
+                button.style.width = '100%';
 
-            e.preventDefault();
+                e.preventDefault();
+            }
+        } else {
+            buttonClearArray.splice(1, buttonClearArray.length - 1);
         }
     }
 }
