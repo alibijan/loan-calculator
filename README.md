@@ -8,10 +8,10 @@ Javascript exercise: a simple loan calculator.
 
 ## Todo
 1. Include loading image
-2. Include clear button when something is calculated, remove if not
-3. LocalStorage?
+2. LocalStorage?
 
 ## Done
+- ~~Include clear button when something is calculated, remove if not~~
 - ~~Remove error when clicked on X~~
 - ~~Include error when text is empty~~
 - ~~Include easter egg~~

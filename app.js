@@ -5,7 +5,7 @@ const form = document.getElementById('loan-form');
     const amount = document.getElementById('amount');
     const interest = document.getElementById('interest');
     const term = document.getElementById('years');
-const button = document.querySelector('input.btn');
+const button = document.querySelector('input.btn-calculate');
 
 const resultsHeading = document.querySelector('h5');
 const results = document.getElementById('results');
@@ -31,6 +31,9 @@ function loadEventListeners() {
 
     // calculate button event listener
     button.addEventListener('click', buttonEvent);
+
+    // clear button
+    button.addEventListener('click', clearButton);
 
     // close error
     card.addEventListener('click', closeError); // running through card to avoid null error
@@ -64,8 +67,11 @@ function buttonEvent(e) {
         e.parentNode.removeChild(e);
     });
 
+    // no errors, loan is calculated
+    const success = amountValue !== '' && interestValue !== 1 && termValue !== 0;
+
     // either display results or run errorEvent()
-    if( amountValue !== '' && interestValue !== 1 && termValue !== 0 ) {
+    if( success ) {
         results.style.display = 'block';
     } else {
         ErrorEvent();
@@ -97,6 +103,53 @@ function buttonEvent(e) {
 
     // prevent default
     e.preventDefault();
+}
+
+// clear button event
+function clearButton(e) {
+    // no errors, loan is calculated
+    const success = amountValue !== '' && interestValue !== 1 && termValue !== 0;
+
+    if( success ) {
+        // creating clear button
+        const clearElement = document.createElement('input');
+        clearElement.setAttribute('type', 'submit');
+        clearElement.setAttribute('value', 'Clear Results');
+        clearElement.className = 'btn btn-clear';
+        // inserting clear button
+        button.parentElement.insertBefore(clearElement, button);
+
+        // changing width for buttons
+        const clearButton = document.querySelector('input.btn-clear');
+        // styling buttons
+        clearButton.style.float = 'left';
+        button.style.width = `calc(100% - (${clearButton.offsetWidth}px + 5px))`;
+        button.style.float = 'right';
+
+        // clear button event listener
+        clearButton.addEventListener('click', clearButtonAction);
+        function clearButtonAction(e) {
+            // loan values
+            amount.value = '';
+            interest.value = '';
+            term.value = '';
+            // result values
+            paymentMonthly.setAttribute('value', '');
+            paymentTotal.setAttribute('value', '');
+            paymentInterest.setAttribute('value', '');
+
+            // hide results
+            results.style.display = 'none';
+
+            // hide clear button
+            clearButton.remove();
+            
+            // reset calculate button styling
+            button.style.width = '100%';
+
+            e.preventDefault();
+        }
+    }
 }
 
 // error event
@@ -142,11 +195,12 @@ function closeError(e) {
 
 // easter egg
 function easterEgg(e) {
-    // console.log(e.target.value);
     if(e.target.value == 80085 ) {
         inputElement = e.target;
         inputElement.style.fontFamily = 'radiolandregular';
     } else {
-        inputElement.style.fontFamily = 'inherit';
+        if( inputElement ) {
+            inputElement.style.fontFamily = 'inherit';
+        }
     }
 }
