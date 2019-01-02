@@ -7,6 +7,9 @@ const form = document.getElementById('loan-form');
     const term = document.getElementById('years');
 const button = document.querySelector('input.btn-calculate');
 
+const loadingElement = document.getElementById('loading');
+const loadingHeader = document.querySelector('.loading-header');
+
 const resultsHeading = document.querySelector('h5');
 const results = document.getElementById('results');
     const paymentMonthly = document.getElementById('monthly-payment');
@@ -70,11 +73,18 @@ function buttonEvent(e) {
     // no errors, loan is calculated
     const success = amountValue !== '' && interestValue !== 1 && termValue !== 0;
 
+    // check if results is already being shown
+    console.log(results.style.display === 'block');
+    const resultsDisplayed = results.style.display === 'block';
+
     // either display results or run errorEvent()
-    if( success ) {
-        results.style.display = 'block';
+    if( success && resultsDisplayed === false ) {
+        // load if results aren't being displayed already
+        load();
+    } else if ( success && resultsDisplayed === true ) {
+        // Do nothing if results are being displayed already
     } else {
-        ErrorEvent();
+        errorEvent();
     }
 
     // set monthly payment input
@@ -105,9 +115,31 @@ function buttonEvent(e) {
     e.preventDefault();
 }
 
+// Loading event
+function load() {
+    // // DISCLAIMER:
+    // I realize adding a fake loading screen is the worst thing ever, but it's a part of the projects challenge
+
+    // display loading element
+    loadingElement.style.display = 'block';
+
+    // pick how long it will load for, between 0 - 2 seconds
+    const loadTime = Math.floor(Math.random() * 2000);
+    console.log(loadTime);
+
+    // disable loading image
+    setTimeout(function(){
+        // hiding loader
+        loadingElement.style.display = 'none';
+
+        // displaying results
+        results.style.display = 'block';
+    }, loadTime);
+}
+
 // clear button event
-function clearButton(e) {
-    // no errors, loan is calculated
+function clearButton() {
+    // checks if fields are empty
     const success = amountValue !== '' && interestValue !== 1 && termValue !== 0;
 
     if( success ) {
@@ -158,8 +190,12 @@ function clearButton(e) {
     }
 }
 
+// add comma after 3rd number
+// not added yet, but idea for doing this:
+// return calculated value in reverse, count it, if it has a value>3, add , on the 3rd one?
+
 // error event
-function ErrorEvent(removeErrorEvent) {
+function errorEvent() {
     // create error element
     const errorElement = document.createElement('div');
     // give classes to error element
@@ -178,10 +214,6 @@ function ErrorEvent(removeErrorEvent) {
     errorElement.appendChild(errorElementClose);
     // insert error element before heading
     card.insertBefore(errorElement, heading);
-
-    if( removeErrorEvent === 'remove' ) {
-        errorElement.remove();
-    }
 }
 
 // close error event
